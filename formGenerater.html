@@ -57,6 +57,106 @@
   </tr>
 </table>
 <button ng-click = 'addField()' > Add </button>
+<button onclick = 'display_code()' > Generate Code </button>
+</div>
+<div  id = 'code' style = ' display : none; background : black; width : 80%; height : 80%; overflow : auto; position : absolute; left : 10%; top : 10%; text-align : center; color : white'>
+
+<h1></u> Overall </u></h1>
+<textarea style = 'color : black; width : 90%; height : 75%' ng-non-bindable> 
+&lt;html&gt;
+&lt;head&gt;
+  &lt;link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"&gt;
+  &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"&gt;&lt;/script&gt;
+  &lt;script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"&gt;&lt;/script&gt;
+  &lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+  &lt;body ng-app = 'myForm' ng-controller = 'formController'&gt;
+	&lt;title &gt;{{ title }}&lt;/title&gt;
+	&lt;div class="container col-xs-{{size}}"&gt;
+  		&lt;h2&gt;{{ heading }}&lt;/h2&gt;
+  		&lt;form role="form"&gt;
+    		&lt;div class="form-group" ng-repeat = 'field in fields | filter : filterc'&gt;
+      			&lt;label for="{{field.type}}"&gt;{{field.label}}&lt;/label&gt;
+      			&lt;input type="{{field.type}}" class="{{ fieldType[field.type].class }}" placeholder="{{field.placeholder}}"&gt;
+   		 	&lt;/div&gt;
+    		&lt;button type="submit" class="btn btn-default"&gt;Submit&lt;/button&gt;
+  		&lt;/form&gt;
+	&lt;/div&gt;
+  &lt;/body&gt;
+</textarea>
+<textarea style = 'color : black; width : 90%; height : 15%'>
+&lt;script&gt;
+  	var myForm = angular.module('myForm',[]);
+		myForm.controller('formController', ['$scope', function($scope) {
+			$scope.size = {{size}};
+			$scope.title = "{{title}}";
+			$scope.heading = "{{heading}}";	
+			$scope.fields = {{fields}};
+
+			$scope.filterc = function(item){
+				if(item.dis == 0 )
+					return false;
+				return true;
+			}			
+			$scope.fieldType = {
+				"checkbox" : { "class" : "" },
+				"input" : { "class" : "form-control"},
+				"email" : { "class" : "form-control"},
+				"password" : { "class" : "form-control"},
+				"text" : { "class" : "form-control"}
+			};
+		}]);
+  &lt;/script&gt;
+  &lt;html &gt;
+</textarea>
+<!--h1><u>Style & JS script</u></h1>
+<textarea style = 'color : black; width : 90%; height : 15%'>
+  &lt;link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"&gt;
+  &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"&gt;&lt;/script&gt;
+  &lt;script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"&gt;&lt;/script&gt;
+  &lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"&gt;&lt;/script&gt;
+</textarea>
+<h1><u> HTML CODE </u></h1>
+<textarea style = 'color : black; width : 90%; height : 50%'>
+&lt;body ng-app = 'myForm' ng-controller = 'formController'&gt;
+	&lt;title&gt;{{ title }}&lt;/title&gt;
+	&lt;div class="container col-xs-{{size}}"&gt;
+  		&lt;h2&gt;{{ heading }}&lt;/h2&gt;
+  		&lt;form role="form"&gt;
+    		&lt;div class="form-group" ng-repeat = 'field in fields | filter : filterc'&gt;
+      			&lt;label for="{{field.type}}"&gt;{{field.label}}&lt;/label&gt;
+      			&lt;input type="{{field.type}}" class="{{ fieldType[field.type].class }}" placeholder="{{field.placeholder}}"&gt;
+   		 	&lt;/div&gt;
+    		&lt;button type="submit" class="btn btn-default"&gt;Submit&lt;/button&gt;
+  		&lt;/form&gt;
+	&lt;/div&gt;
+&lt;/body&gt;
+</textarea>
+<h1><u> Scripts </u></h1>
+<textarea style = 'color : black; width : 90%; height : 50%'>
+	var myForm = angular.module('myForm',[]);
+		myForm.controller('formController', ['$scope', function($scope) {
+			$scope.size = {{size}};
+			$scope.title = "{{title}}";
+			$scope.heading = "{{heading}}";	
+			$scope.fields = {{fields}};
+
+			$scope.filterc = function(item){
+				if(item.dis == 0 )
+					return false;
+				return true;
+			}			
+			$scope.fieldType = {
+				"checkbox" : { "class" : "" },
+				"input" : { "class" : "form-control"},
+				"email" : { "class" : "form-control"},
+				"password" : { "class" : "form-control"},
+				"text" : { "class" : "form-control"}
+			};
+
+</textarea-->
+
+
 </div>
 </body>
 <script>
@@ -103,6 +203,10 @@
 				$scope.heading = heading;
 			}
 		}]);
+
+		function display_code(){
+      document.getElementById("code").style.display = 'block';
+    }
 </script>
 
 </html>
