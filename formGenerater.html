@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+</head>
+<body ng-app = 'myForm' ng-controller = 'formController'>
+<div>
+<title>{{ title }}</title>
+<div class="container col-xs-{{size}}">
+  <h2>{{ heading }}</h2>
+  <form role="form">
+    <div class="form-group" ng-repeat = 'field in fields | filter : filterc'>
+      <label for="{{field.type}}">{{field.label}}</label>
+      <input type="{{field.type}}" class="{{ fieldType[field.type].class }}" placeholder="{{field.placeholder}}">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>
+  <div style = 'position : absolute; left : 60%; top : 10%; width : 40%; padding : 5px; background : rgba(100,100,100,0.2);'>
+  	<table>
+  		<div>
+  			<p> Size </p>
+  			<input ng-model = 'size' />
+  		</div>
+  		<br>
+  		<div>
+  			<p> Title </p>
+  			<input ng-model = 'title' />
+  		</div>
+  		<br>
+  		<div>
+  			<p> Heading </p>
+  			<input ng-model = 'heading' />
+  		</div>
+  		<br>
+  		<tr>
+  			<th> Lable </th>
+  			<th> Type </th>
+  			<th> PlaceHolder </th>
+  	<tr ng-repeat = 'field in fields | filter : filterc' >
+  		<td>
+  			<input type = 'text' ng-model = 'fields[field.id].label' />
+  		</td>
+  		<td>
+  			<input type = 'text' ng-model = 'fields[field.id].type' />
+  		</td>
+  		<td>
+  			<input type = 'text' ng-model = 'fields[field.id].placeholder' />
+  		</td>
+  		<td>
+  			<button ng-click = 'del(field.id)'>X</button>
+  </tr>
+</table>
+<button ng-click = 'addField()' > Add </button>
+</div>
+</body>
+<script>
+	var myForm = angular.module('myForm',[]);
+		myForm.controller('formController', ['$scope', function($scope) {
+			$scope.size = 6;
+			$scope.title = "Registration";
+			$scope.heading = "Its lovely to see to here. Please Register Below! :)";	
+			$scope.fields = [ 
+				{ "id" : 0, "label" : "Email: ","type" : "email","placeholder" : "Enter email", "dis" : 1},
+				{ "id" : 1, "label" : "Password: ","type" : "password", "placeholder" : "Enter password", "dis" : 1},
+				{ "id" : 2, "label" : "Remember Me ","type" : "checkbox", "placeholder" : "", "dis" : 1},
+			];
+
+			$scope.addField = function(){
+				var x = { "id" : 0, "label" : "Add Label" ,"type" : "input", "placeholder" : "placeholder", "dis" : 1};
+				x.id = $scope.fields.length;
+				$scope.fields.push(x);
+				console.log("done");
+			}
+			
+			$scope.del = function(id){
+				$scope.fields[id].dis = 0;
+			}
+
+			$scope.filterc = function(item){
+				if(item.dis == 0 )
+					return false;
+				return true;
+			}			
+			$scope.fieldType = {
+				"checkbox" : { "class" : "" },
+				"input" : { "class" : "form-control"},
+				"email" : { "class" : "form-control"},
+				"password" : { "class" : "form-control"},
+				"text" : { "class" : "form-control"},
+
+			};
+			$scope.setTitle = function(title){
+				$scope.title = title;
+			}
+
+			$scope.setHeading = function(heading){
+				$scope.heading = heading;
+			}
+		}]);
+</script>
+
+</html>
